@@ -28,7 +28,7 @@
 
 % required packages - put more packages here
 \RequirePackage[top=0.5cm,left=1cm,right=1cm,bottom=1.2cm]{geometry} % Change Horizontal and Vertical margins
-\RequirePackage{fontawesome} % fontawesome icons
+\RequirePackage{fontawesome5} % fontawesome icons
 \RequirePackage[usenames,dvipsnames]{xcolor} % custom colors
 \RequirePackage{fontspec} % custom fonts
 \RequirePackage{array}
@@ -108,6 +108,8 @@
 
 \newcommand*{\github}[2]{\def\comcv@githuburl{#1}\def\comcv@githubtext{#2}} % github
 
+\newcommand*{\telegram}[2]{\def\comcv@telegramurl{#1}\def\comcv@telegramtext{#2}} % Telegram
+
 \newcommand*{\linkedin}[2]{\def\comcv@linkedinurl{#1}\def\comcv@linkedintext{#2}} % linkedin
 
 \newcommand\horbar[1][]{\noindent\makebox[\linewidth]{\color{gray}\rule{\paperwidth}{0.4pt}}} % unindented horizontal line
@@ -170,6 +172,16 @@
     \else
         \def\comcv@github{}
     \fi
+
+    \ifdefined\comcv@telegramurl
+    \ifx\comcv@telegramurl\empty
+        \def\comcv@telegram{}
+    \else
+        \def\comcv@telegram{\faTelegram~\href{\comcv@telegramurl}{\comcv@telegramtext}}
+    \fi
+    \else
+        \def\comcv@telegram{}
+    \fi
     
     \ifdefined\comcv@websiteurl
     \ifx\comcv@websiteurl\empty
@@ -191,7 +203,7 @@
 
         \ifdefined\comcv@title
         \ifx\comcv@title\empty
-            \large\light\comcv@email~~\comcv@website~~\comcv@github~~\comcv@linkedin
+            \large\light\comcv@email~~\comcv@website~~\comcv@github~~\comcv@telegram~~\comcv@linkedin
             \vspace{-\topsep}
             \horbar
             \vspace{-\topsep}
@@ -200,11 +212,11 @@
             \vspace{-\topsep}
             \horbar
 
-            \comcv@email~~\comcv@website~~\comcv@github~~\comcv@linkedin
+            \comcv@email~~\comcv@website~~\comcv@github~~\comcv@telegram~~\comcv@linkedin
             \vspace{-\topsep}
         \fi
         \else
-            \large\light\comcv@email~~\comcv@website~~\comcv@github~~\comcv@linkedin
+            \large\light\comcv@email~~\comcv@website~~\comcv@github~~\comcv@telegram~~\comcv@linkedin
             \vspace{-\topsep}
             \horbar
             \vspace{-\topsep}
@@ -221,7 +233,7 @@
 \AtBeginDocument{
     \pagestyle{fancy}
     \fancyhead{}
-    \fancyfoot[C]{\footnotesize\light\comcv@firstname's Résumé, \comcv@date, \comcv@email} % footer text
+    \fancyfoot[C]{\footnotesize\light\comcv@firstname's CV \comcv@date, \comcv@email} % footer text
     \fancyfoot[R]{\raggedleft\footnotesize\comcv@page} % page number and page link
     \renewcommand{\headrulewidth}{0em}
     \setlength\footskip{\baselineskip}
